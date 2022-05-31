@@ -24,12 +24,12 @@ const PASSWORD_BD = process.env.PASSWORD_BD
 const PORT_CLIENT = process.env.PORT_CLIENT
 
 const client = new Client({
-    user: USER_BD,
-    host: HOST,
-    database: DATABASE,
-    password: PASSWORD_BD,
-    port: PORT_CLIENT,
-})
+    user: process.env.PG_USER,      //postgres user
+    host: process.env.PG_ENDPOINT,  //localhost (I also tried 127.0.0.1)
+    database: process.env.PG_DB,    //database name to connect to
+    password: process.env.PG_PASS,  //postgres user password
+    port: process.env.PG_PORT       //5432
+});
 client.connect()
 
 
