@@ -68,7 +68,7 @@ app.post('/login', (req, res) => {
 });
 
 
-app.post('https://test-backend-12.herokuapp.com//cadastrar', (req, res) => {
+app.post('/cadastrar', (req, res) => {
 
     console.log(req.body)
     const email = req.body.email;
