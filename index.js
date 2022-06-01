@@ -24,7 +24,7 @@ console.log(`Rodando na porta: ${process.env.PORT}!`);
 })
 
 
-
+console.log("Oi estou rodando")
 const SECRET = process.env.SECRET
 
 const verifyJWT = (req, res, next) => {
