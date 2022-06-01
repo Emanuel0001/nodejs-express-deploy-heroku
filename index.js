@@ -3,33 +3,37 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv/config.js')
-
-
-const app = express();
-const port = process.env.PORT || 3001;
-let user = [];
-
-app.use(cors());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 const { Client } = require('pg');
 const { rows } = require('pg/lib/defaults');
 
-const USER_BD = process.env.USER_BD
-const HOST = process.env.HOST
-const DATABASE = process.env.DATABASE
-const PASSWORD_BD = process.env.PASSWORD_BD
-const PORT_CLIENT = process.env.PORT_CLIENT
+
+const url = process.env.DATABASE_URL;
+
+const app = express();
+let user = [];
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.listen(process.env.PORT || 3001, (err) => {
+    if (err) { return console.log(err) }
+
+console.log(`Rodando na porta: ${process.env.PORT}!`);
+
+})
+
+
+
+
 
 const client = new Client({
-    user: process.env.PG_USER,      //postgres user
-    host: process.env.PG_ENDPOINT,  //localhost (I also tried 127.0.0.1)
-    database: process.env.PG_DB,    //database name to connect to
-    password: process.env.PG_PASS,  //postgres user password
-    port: process.env.PG_PORT       //5432
-});
+    user: process.env.USER_BD,
+    host: url,
+    database: process.env.DATABASE,
+    password: process.env.PASSWORD_BD,
+    port: process.env.PORT_CLIENT,
+})
 client.connect()
 
 
@@ -43,6 +47,8 @@ const verifyJWT = (req, res, next) => {
         next();
     })
 }
+
+
 app.get('/client', verifyJWT, (req, res) => {
     console.log(req.userId + ' fez chamada')
     res.status(200).send("Welcome 🙌 ");
@@ -107,4 +113,6 @@ app.post('/cadastrar', (req, res) => {
 });
 
 
-app.listen(port, () => console.log(`Rodando na porta: ${port}!`))
+
+
+
