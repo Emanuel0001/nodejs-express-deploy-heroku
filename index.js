@@ -27,6 +27,9 @@ console.log(`Rodando na porta: ${process.env.PORT}!`);
 
 const SECRET = process.env.SECRET
 
+app.post('/', (req, res) => {
+    return res.json({ "sucess": "Bando de dados rodando" });
+});
 const verifyJWT = (req, res, next) => {
     const token = req.headers['x-access-token'];
     jwt.verify(token, SECRET, (err, decoded) => {
