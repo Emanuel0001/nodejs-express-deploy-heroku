@@ -25,18 +25,6 @@ console.log(`Rodando na porta: ${process.env.PORT}!`);
 
 
 
-
-
-const client = new Client({
-    user: process.env.USER_BD,
-    host: url,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD_BD,
-    port: process.env.PORT_CLIENT,
-})
-client.connect()
-
-
 const SECRET = process.env.SECRET
 
 const verifyJWT = (req, res, next) => {
