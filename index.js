@@ -29,15 +29,6 @@ const client = new Client({
 
 client.connect();
 
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-});
-
-
 
 app.listen(process.env.PORT || 3001, (err) => {
     if (err) { return console.log(err) }
