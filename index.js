@@ -13,6 +13,12 @@ const app = express();
 let user = [];
 
 app.use(cors());
+app.use('/',
+express.static(
+    resolve(
+         __dirname,
+         './build'
+    )))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -24,7 +30,6 @@ console.log(`Rodando na porta: ${process.env.PORT}!`);
 })
 
 
-console.log("Oi estou rodando")
 const SECRET = process.env.SECRET
 
 const verifyJWT = (req, res, next) => {
