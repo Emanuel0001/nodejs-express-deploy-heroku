@@ -129,11 +129,5 @@ app.post('/cadastrar', (req, res) => {
 
             }
         });
-    });
-
-
-
-
-
-
+});
 
