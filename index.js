@@ -97,14 +97,12 @@ app.post('/cadastrar', (req, res) => {
         .then(results => {
             const resultadoQuery = results
            
-            var soma = 0;
+    
             if (resultadoQuery.rowCount === 1) {
              
                 res.json({ "error": "E-mail já possui cadastro" })
-                return soma = 1
-            } 
-            
-            else if(soma === 1) {
+                
+            } else {
                 
                 if (password === passwordConfirmacao) {
                     client.query(`INSERT INTO usuario (email,password,name) VALUES ($1, $2, $3)`, [email, password, name])
