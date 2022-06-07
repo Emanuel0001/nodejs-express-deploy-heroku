@@ -84,7 +84,6 @@ app.post('/login', (req, res) => {
 });
 
 
-
 app.post('/cadastrar', (req, res) => {
 
     console.log(req.body)
@@ -94,16 +93,18 @@ app.post('/cadastrar', (req, res) => {
     const name = req.body.name;
 
 
-    client.query(`select * from usuario WHERE email = $1 AND password = $2`, [email, password])
+    client.query(`select * from usuario WHERE email = $1`, [email])
         .then(results => {
-            const resultad = results
-            console.log(resultad.rowCount)
-    
-            if (resultad.rowCount === 1) {
+            const resultadoQuery = results
+           
+            var soma = 0;
+            if (resultadoQuery.rowCount === 1) {
              
                 res.json({ "error": "E-mail já possui cadastro" })
+                return soma = 1
+            } 
             
-            } else {
+            else if(soma === 1) {
                 
                 if (password === passwordConfirmacao) {
                     client.query(`INSERT INTO usuario (email,password,name) VALUES ($1, $2, $3)`, [email, password, name])
@@ -130,4 +131,3 @@ app.post('/cadastrar', (req, res) => {
             }
         });
 });
-
