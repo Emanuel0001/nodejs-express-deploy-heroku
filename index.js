@@ -97,11 +97,11 @@ app.post('/cadastrar', (req, res) => {
         .then(results => {
             const resultadoQuery = results
            
-    
+           console.log(resultadoQuery.rowCount)
             if (resultadoQuery.rowCount === 1) {
              
                 res.json({ "error": "E-mail já possui cadastro" })
-                
+                resultadoQuery.rowCount = 0
             } else {
                 
                 if (password === passwordConfirmacao) {
