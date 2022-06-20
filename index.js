@@ -195,3 +195,18 @@ app.post('/apagaImagem', (req, res) => {
     })
 });
 
+app.post('/buscarRegistros', (req, res) => {
+
+    client.query(`SELECT email,name , id_cod_img FROM usuario`) 
+       .then(results => {
+        
+      
+        var Resultado2 = results
+        var usuarios = [Resultado2.rows];
+        return res.json({ "usuarios": Resultado2});
+
+        
+    })
+
+});
+
