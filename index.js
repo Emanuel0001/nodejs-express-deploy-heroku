@@ -5,9 +5,12 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv/config.js')
 
 const { rows } = require('pg/lib/defaults');
+const USER_BD = process.env.USER_BD
+const HOST = process.env.HOST
+const DATABASE = process.env.DATABASE
+const PASSWORD_BD = process.env.PASSWORD_BD
+const PORT_CLIENT = process.env.PORT_CLIENT
 
-
-const url = process.env.DATABASE_URL;
 
 const app = express();
 let user = [];
@@ -20,11 +23,12 @@ app.use(express.urlencoded({limit: '50mb'}));
 const { Client } = require('pg');
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    user: USER_BD,
+    host: HOST,
+    database: DATABASE,
+    password: PASSWORD_BD,
+    port: PORT_CLIENT,
+  })
 
 client.connect();
 
