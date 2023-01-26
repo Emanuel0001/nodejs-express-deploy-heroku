@@ -3,13 +3,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv/config.js')
-
+const PORT = process.env.PORT || 3001
 const { rows } = require('pg/lib/defaults');
+
 const USER_BD = process.env.USER_BD
 const HOST = process.env.HOST
 const DATABASE = process.env.DATABASE
 const PASSWORD_BD = process.env.PASSWORD_BD
-const PORT_CLIENT = process.env.PORT_CLIENT
+const PORT_CLIENT = process.env.PORT_CLIENT 
 
 
 const app = express();
@@ -17,7 +18,7 @@ let user = [];
 
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb'}))
 
 
 const { Client } = require('pg');
@@ -31,7 +32,6 @@ const client = new Client({
   })
 
 client.connect();
-
 
 app.listen(process.env.PORT || 3001, (err) => {
     if (err) { return console.log(err) }
@@ -138,7 +138,7 @@ app.post('/salvarFoto', (req, res) => {
     const email = req.body.email;
     const isBase64Code = req.body.code64;
 
-    client.query('UPDATE usuario SET id_cod_img = $1 WHERE email = $2', [isBase64Code, email])
+    client.query('UPDATE usuario SET img = $1 WHERE email = $2', [isBase64Code, email])
         .then(results => {
             let resultado = results;
             console.log(resultado)
@@ -159,19 +159,15 @@ app.post('/imagem', (req, res) => {
 
     const email = req.body.email;
 
-    client.query(`select id_cod_img from usuario WHERE email = $1`, [email]) 
+    client.query(`select img from usuario WHERE email = $1`, [email]) 
        .then(results => {
         let resultado = results
-
-
-        const id_cod_img = results.rows[0];
-        console.log(id_cod_img)
+        const img = results.rows[0];
 
         if (resultado.rowCount === 1) {
-            return res.json({ "message": id_cod_img});
+            return res.json({ "message": img});
         }
         else {
-
         }
     })
 });
@@ -183,7 +179,7 @@ app.post('/apagaImagem', (req, res) => {
     const email = req.body.email;
     const isBase64Code = '';
 
-    client.query('UPDATE usuario SET id_cod_img = $1 WHERE email = $2', [isBase64Code, email]) 
+    client.query('UPDATE usuario SET img = $1 WHERE email = $2', [isBase64Code, email]) 
        .then(results => {
         let resultado = results
 
@@ -201,7 +197,7 @@ app.post('/apagaImagem', (req, res) => {
 
 app.post('/buscarRegistros', (req, res) => {
 
-    client.query(`SELECT email,name , id_cod_img FROM usuario`) 
+    client.query(`SELECT email,name , img FROM usuario`) 
        .then(results => {
         
       
